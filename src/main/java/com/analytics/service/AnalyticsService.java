@@ -2,9 +2,11 @@ package com.analytics.service;
 
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.repository.AnalyticsRepository;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Log
 @Service
 public class AnalyticsService {
 
@@ -16,6 +18,7 @@ public class AnalyticsService {
     }
 
     public void createAnalytic(AnalyticInput analyticInput) {
+        log.info(analyticInput.toString());
         this.analyticsRepository.insert(analyticInput);
     }
 
