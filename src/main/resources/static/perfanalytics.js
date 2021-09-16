@@ -45,7 +45,7 @@ window.addEventListener('load', () => {
   }
 
   let perfMetrics = getPerformanceMetrics(window.performance);
-  perfMetrics[siteUrl] = window.location.href;
+  perfMetrics["siteUrl"] = window.location.href;
   console.log(perfMetrics);
   sendPerformanceMetrics(perfMetrics);
 });
