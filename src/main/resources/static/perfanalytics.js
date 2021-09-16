@@ -30,6 +30,14 @@ const getPerformanceMetrics = (performance) => {
   return {ttfb, fcp, domLoad, windowLoad, resourceMetrics};
 }
 
+const sendPerformanceMetrics = (metrics) => {
+    let headers = {
+        type: 'application/json'
+    };
+    let blob = new Blob([JSON.stringify(metrics)], headers);
+    navigator.sendBeacon('https://performanceanalytics-api.herokuapp.com/api/analytic', blob);
+}
+
 window.addEventListener('load', () => {
   if (!isPerformanceSupported()) {
     console.log("perfanalytics.js: window.performance is not supported!");
@@ -38,4 +46,5 @@ window.addEventListener('load', () => {
 
   const perfMetrics = getPerformanceMetrics(window.performance);
   console.log(perfMetrics);
+  sendPerformanceMetrics(perfMetrics);
 });
