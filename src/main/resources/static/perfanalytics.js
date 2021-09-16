@@ -44,7 +44,8 @@ window.addEventListener('load', () => {
     return;
   }
 
-  const perfMetrics = getPerformanceMetrics(window.performance);
+  let perfMetrics = getPerformanceMetrics(window.performance);
+  perfMetrics[siteUrl] = window.location.href;
   console.log(perfMetrics);
   sendPerformanceMetrics(perfMetrics);
 });

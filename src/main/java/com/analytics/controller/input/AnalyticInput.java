@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class AnalyticInput {
-    String siteId;
+    String siteUrl;
     double ttfb;
     double fcp;
     double domLoad;
