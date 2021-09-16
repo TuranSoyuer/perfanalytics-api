@@ -1,0 +1,1 @@
+web: java -jar target/performanalytics-api-0.0.1.jar

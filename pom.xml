@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.analytics</groupId>
 	<artifactId>performanalytics-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>performanalytics-api</name>
 	<description>A web performance analyzer api.</description>
 	<properties>
