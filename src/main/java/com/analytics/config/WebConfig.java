@@ -12,6 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("https://performanceanalytics-app.herokuapp.com",
                         "http://localhost:4200")
-                .allowedMethods("POST", "GET");
+                .allowedMethods("POST", "GET")
+                .allowCredentials(true);
     }
 }
