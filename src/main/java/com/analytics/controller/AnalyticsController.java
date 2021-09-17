@@ -6,9 +6,9 @@ import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,12 +30,11 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
+    @CrossOrigin(origins = "https://performanceanalytics-app.herokuapp.com/")
     @PostMapping("/analytics")
     public ResponseEntity createAnalytic(@RequestBody AnalyticInput analyticInput) {
         this.analyticsService.createAnalytic(analyticInput);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/analytics")
