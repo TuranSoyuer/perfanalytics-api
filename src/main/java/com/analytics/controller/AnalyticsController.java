@@ -2,6 +2,7 @@ package com.analytics.controller;
 
 import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
+import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 @Log
 @RestController
@@ -32,8 +36,12 @@ public class AnalyticsController {
     }
 
     @GetMapping("/analytics")
-    public ResponseEntity getAnalytic(@RequestBody AnalyticFilterInput filterInput) {
-        log.info("filter: " + filterInput.toString());
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<List<AnalyticItem>> getAnalytic() {
+//        log.info("filter: " + filterInput.toString());
+
+        Date date = new Date(System.currentTimeMillis() - 1800 * 1000);
+        AnalyticFilterInput input = new AnalyticFilterInput();
+        input.setStartDate(date);
+        return ResponseEntity.ok(analyticsService.getAnalytics(input));
     }
 }

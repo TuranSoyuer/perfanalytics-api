@@ -1,13 +1,17 @@
 package com.analytics.service;
 
+import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.repository.AnalyticItem;
 import com.analytics.repository.AnalyticsRepository;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Filters;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Log
 @Service
@@ -28,7 +32,8 @@ public class AnalyticsService {
         this.analyticsRepository.save(analyticItem);
     }
 
-    public void getAnalytics() {
+    public List<AnalyticItem> getAnalytics(AnalyticFilterInput filterInput) {
+        return analyticsRepository.findAll(filterInput.getStartDate());
 
     }
 
