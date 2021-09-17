@@ -30,13 +30,14 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
-    @CrossOrigin(origins = "https://performanceanalytics-app.herokuapp.com/")
+    @CrossOrigin(origins = "https://performanceanalytics-app.herokuapp.com")
     @PostMapping("/analytics")
     public ResponseEntity createAnalytic(@RequestBody AnalyticInput analyticInput) {
         this.analyticsService.createAnalytic(analyticInput);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "https://performanceanalytics-app.herokuapp.com")
     @GetMapping("/analytics")
     public ResponseEntity<List<AnalyticItem>> getAnalytic() {
 //        log.info("filter: " + filterInput.toString());
