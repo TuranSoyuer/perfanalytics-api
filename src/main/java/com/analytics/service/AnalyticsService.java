@@ -7,6 +7,11 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 @Log
 @Service
 public class AnalyticsService {
@@ -18,9 +23,13 @@ public class AnalyticsService {
         this.analyticsRepository = analyticsRepository;
     }
 
-    public void createAnalytic(AnalyticInput analyticInput) {
-        log.info(analyticInput.toString());
-        AnalyticItem analyticItem = new AnalyticItem(analyticInput.getSiteUrl(), analyticInput.getTtfb());
+    public void createAnalytic(AnalyticInput input) {
+        log.info("Analytic input:" + input.toString());
+
+        AnalyticItem analyticItem = new AnalyticItem(input.getSiteUrl(), input.getTtfb(), input.getFcp(),
+                input.getDomLoad(), input.getWindowLoad(), input.getResourceMetrics(), new Date());
+
+        log.info("Analytic item:" + analyticItem.toString());
         this.analyticsRepository.save(analyticItem);
     }
 
