@@ -1,6 +1,7 @@
 package com.analytics.service;
 
 import com.analytics.controller.input.AnalyticInput;
+import com.analytics.repository.AnalyticItem;
 import com.analytics.repository.AnalyticsRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class AnalyticsService {
 
     public void createAnalytic(AnalyticInput analyticInput) {
         log.info(analyticInput.toString());
-        this.analyticsRepository.insert(analyticInput);
+        AnalyticItem analyticItem = new AnalyticItem(analyticInput.getSiteUrl(), analyticInput.getTtfb());
+        this.analyticsRepository.save(analyticItem);
     }
 
 }
