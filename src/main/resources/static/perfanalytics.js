@@ -15,8 +15,9 @@ const getPerformanceMetrics = (performance) => {
   const domLoad = convertMsToSec(
       timing.domContentLoadedEventEnd - timing.navigationStart);
   const windowLoad = convertMsToSec(Date.now() - timing.navigationStart);
-  const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
-      "paint")[0].startTime);
+//  const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
+//      "paint")[0].startTime);
+  const fcp = 0;
   const resourceMetrics = performance.getEntriesByType('resource').map(
       (resource) => {
         return {
