@@ -5,12 +5,12 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://performanceanalytics-app.herokuapp.com/");
+                .allowedOrigins("https://performanceanalytics-app.herokuapp.com",
+                        "http://localhost:4200");
     }
 }
