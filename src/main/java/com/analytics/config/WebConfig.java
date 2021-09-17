@@ -11,6 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("https://performanceanalytics-app.herokuapp.com",
-                        "http://localhost:4200");
+                        "http://localhost:4200")
+                .allowedMethods("POST", "GET");
     }
 }
