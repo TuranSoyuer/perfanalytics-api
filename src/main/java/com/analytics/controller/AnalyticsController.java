@@ -6,6 +6,7 @@ import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,9 @@ public class AnalyticsController {
     @PostMapping("/analytics")
     public ResponseEntity createAnalytic(@RequestBody AnalyticInput analyticInput) {
         this.analyticsService.createAnalytic(analyticInput);
-        return ResponseEntity.ok(HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     @GetMapping("/analytics")
