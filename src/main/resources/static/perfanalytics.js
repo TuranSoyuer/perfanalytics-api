@@ -35,7 +35,7 @@ const sendPerformanceMetrics = (metrics) => {
         type: 'application/json'
     };
     let blob = new Blob([JSON.stringify(metrics)], headers);
-    navigator.sendBeacon('https://performanceanalytics-api.herokuapp.com/api/analytic', blob);
+    navigator.sendBeacon('https://performanceanalytics-api.herokuapp.com/api/analytics', blob);
 }
 
 window.addEventListener('load', () => {

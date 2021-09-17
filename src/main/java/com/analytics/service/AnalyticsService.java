@@ -21,13 +21,15 @@ public class AnalyticsService {
     }
 
     public void createAnalytic(AnalyticInput input) {
-        log.info("Analytic input:" + input.toString());
-
         AnalyticItem analyticItem = new AnalyticItem(input.getSiteUrl(), input.getTtfb(), input.getFcp(),
                 input.getDomLoad(), input.getWindowLoad(), input.getResourceMetrics(), new Date());
 
-        log.info("Analytic item:" + analyticItem.toString());
+//        log.info("Analytic item:" + analyticItem.toString());
         this.analyticsRepository.save(analyticItem);
+    }
+
+    public void getAnalytics() {
+
     }
 
 }

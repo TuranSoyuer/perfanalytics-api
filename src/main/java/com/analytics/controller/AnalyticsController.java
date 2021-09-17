@@ -1,11 +1,13 @@
 package com.analytics.controller;
 
+import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.service.AnalyticsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +25,15 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
-    @PostMapping("/analytic")
+    @PostMapping("/analytics")
     public ResponseEntity createAnalytic(@RequestBody AnalyticInput analyticInput) {
         this.analyticsService.createAnalytic(analyticInput);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/analytics")
+    public ResponseEntity getAnalytic(@RequestBody AnalyticFilterInput filterInput) {
+        log.info("filter: " + filterInput.toString());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
