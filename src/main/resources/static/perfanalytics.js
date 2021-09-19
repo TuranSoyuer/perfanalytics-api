@@ -18,6 +18,7 @@ const getPerformanceMetrics = (performance) => {
 //  const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
 //      "paint")[0].startTime);
   console.log("OLD FCP: " + performance.getEntriesByName("first-contentful-paint","paint"));
+  console.log("OLD FCP getEntries by type: " + performance.getEntriesByType("paint"));
   const fcp = 1;
   const resourceMetrics = performance.getEntriesByType('resource').map(
       (resource) => {
@@ -77,7 +78,7 @@ const startObserver = () => {
   //observer.observe({ entryTypes: ['paint'] });
 }
 
-startObserver();
+//startObserver();
 
 window.addEventListener('load', () => {
   if (!isPerformanceSupported()) {
