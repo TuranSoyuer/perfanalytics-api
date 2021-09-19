@@ -55,6 +55,7 @@ const startObserver = () => {
   
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
+      console.log("observer entry:" + entry);
       observerEntryHandlers[entry.entryType](entry);
     }
   })
