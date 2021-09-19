@@ -15,16 +15,11 @@ const getPerformanceMetrics = (performance) => {
   const domLoad = convertMsToSec(
       timing.domContentLoadedEventEnd - timing.navigationStart);
   const windowLoad = convertMsToSec(Date.now() - timing.navigationStart);
-  //const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
-  //    "paint")[0].startTime);
   const fcpEntry = performance.getEntriesByName("first-contentful-paint","paint");
-  let fcp = 0;
+  let fcp = -1;
   if(fcpEntry && fcpEntry.length>0) {
     fcp = convertMsToSec(fcpEntry[0].startTime);
   }
-  console.log("OLD FCP HEERE: " + performance.getEntriesByName("first-contentful-paint","paint"));
-  console.log("OLD FCP getEntries by type: " + performance.getEntriesByType("paint"));
-  console.log("OLD FCP getEntries  " + performance.getEntries());
   const resourceMetrics = performance.getEntriesByType('resource').map(
       (resource) => {
         return {
@@ -45,45 +40,6 @@ const sendPerformanceMetrics = (metrics) => {
     let blob = new Blob([JSON.stringify(metrics)], headers);
     navigator.sendBeacon('https://performanceanalytics-api.herokuapp.com/api/analytics', blob);
 }
-
-const startObserver = () => {
-  console.log('start observer:' + typeof(PerformanceObserver));
-  if(typeof(PerformanceObserver) === 'undefined') return;
-
-  const observerEntryHandlers = {
-    paint(entry) {
-      console.log("enrty:" + entry);
-      if(entry.name !== 'first-contentful-paint') return;
-
-      console.log("first-contentful-paint start time(FCP):" + entry.startTime);
-    }
-  }
-  
-  console.log("pass1");
-  /*
-  const observer = new PerformanceObserver((list) => {
-    console.log("pass2" + list);
-    for (const entry of list.getEntries()) {
-      console.log("observer entry:" + entry);
-      observerEntryHandlers[entry.entryType](entry);
-    }
-  })
-  */
-
-  var observer = new PerformanceObserver(function(list, obj) {
-    var entries = list.getEntries();
-    for (var i=0; i < entries.length; i++) {
-      // Process "mark" and "frame" events
-      console.log("observer entry:" + entry);
-    }
-  });
-  observer.observe({entryTypes: ["paint", "mark"]});
-
-  console.log("pass3");
-  //observer.observe({ entryTypes: ['paint'] });
-}
-
-//startObserver();
 
 window.addEventListener('load', () => {
   if (!isPerformanceSupported()) {
