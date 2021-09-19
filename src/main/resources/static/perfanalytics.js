@@ -22,7 +22,7 @@ const getPerformanceMetrics = (performance) => {
   if(fcpEntry && fcpEntry.length>0) {
     fcp = fcpEntry[0].startTime;
   }
-  console.log("OLD FCP: " + performance.getEntriesByName("first-contentful-paint","paint"));
+  console.log("OLD FCP HEERE: " + performance.getEntriesByName("first-contentful-paint","paint"));
   console.log("OLD FCP getEntries by type: " + performance.getEntriesByType("paint"));
   console.log("OLD FCP getEntries  " + performance.getEntries());
   const resourceMetrics = performance.getEntriesByType('resource').map(
@@ -93,6 +93,6 @@ window.addEventListener('load', () => {
 
   let perfMetrics = getPerformanceMetrics(window.performance);
   perfMetrics["siteUrl"] = window.location.href;
-  console.log("All metrics:" + perfMetrics);
+  console.log(perfMetrics);
   sendPerformanceMetrics(perfMetrics);
 });
