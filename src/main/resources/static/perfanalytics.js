@@ -17,7 +17,7 @@ const getPerformanceMetrics = (performance) => {
   const windowLoad = convertMsToSec(Date.now() - timing.navigationStart);
 //  const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
 //      "paint")[0].startTime);
-  console.log(performance.getEntriesByName("first-contentful-paint","paint"));
+  console.log("OLD FCP: " + performance.getEntriesByName("first-contentful-paint","paint"));
   const fcp = 1;
   const resourceMetrics = performance.getEntriesByType('resource').map(
       (resource) => {
@@ -51,3 +51,26 @@ window.addEventListener('load', () => {
   console.log(perfMetrics);
   sendPerformanceMetrics(perfMetrics);
 });
+
+const startObserver = () => {
+  if(typeof(PerformanceObserver) === 'undefined') return;
+
+  
+
+  const observerEntryHandlers = {
+    paint(entry) {
+      if(entry.name !== 'first-contentful-paint') return;
+
+      console.log("first-contentful-paint start time(FCP):" + entry.startTime);
+    }
+  }
+  
+  const observer = new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      observerEntryHandlers[entry.entryType](entry);
+    }
+  })
+  observer.observe({ entryTypes: ['paint'] });
+}
+
+startObserver();
