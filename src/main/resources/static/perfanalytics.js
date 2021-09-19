@@ -54,6 +54,7 @@ const startObserver = () => {
   }
   
   console.log("pass1");
+  /*
   const observer = new PerformanceObserver((list) => {
     console.log("pass2" + list);
     for (const entry of list.getEntries()) {
@@ -61,9 +62,19 @@ const startObserver = () => {
       observerEntryHandlers[entry.entryType](entry);
     }
   })
+  */
+
+  var observer = new PerformanceObserver(function(list, obj) {
+    var entries = list.getEntries();
+    for (var i=0; i < entries.length; i++) {
+      // Process "mark" and "frame" events
+      console.log("observer entry:" + entry);
+    }
+  });
+  observer.observe({entryTypes: ["paint", "mark", "frame"]});
 
   console.log("pass3");
-  observer.observe({ entryTypes: ['paint'] });
+  //observer.observe({ entryTypes: ['paint'] });
 }
 
 startObserver();
