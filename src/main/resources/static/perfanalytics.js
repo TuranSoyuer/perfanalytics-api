@@ -15,12 +15,16 @@ const getPerformanceMetrics = (performance) => {
   const domLoad = convertMsToSec(
       timing.domContentLoadedEventEnd - timing.navigationStart);
   const windowLoad = convertMsToSec(Date.now() - timing.navigationStart);
-//  const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
-//      "paint")[0].startTime);
+  //const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
+  //    "paint")[0].startTime);
+  const fcpEntry = convertMsToSec(performance.getEntriesByName("first-contentful-paint","paint"));
+  let fcp = 0;
+  if(fcpEntry && fcpEntry.length>0) {
+    fcp = fcpEntry[0].startTime;
+  }
   console.log("OLD FCP: " + performance.getEntriesByName("first-contentful-paint","paint"));
   console.log("OLD FCP getEntries by type: " + performance.getEntriesByType("paint"));
   console.log("OLD FCP getEntries  " + performance.getEntries());
-  const fcp = 1;
   const resourceMetrics = performance.getEntriesByType('resource').map(
       (resource) => {
         return {
