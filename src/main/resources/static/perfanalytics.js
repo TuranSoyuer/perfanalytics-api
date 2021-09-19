@@ -41,7 +41,7 @@ const sendPerformanceMetrics = (metrics) => {
 }
 
 const startObserver = () => {
-  console.log('start observer');
+  console.log('start observer:' + typeof(PerformanceObserver));
   if(typeof(PerformanceObserver) === 'undefined') return;
 
   const observerEntryHandlers = {
