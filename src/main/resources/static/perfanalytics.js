@@ -17,10 +17,10 @@ const getPerformanceMetrics = (performance) => {
   const windowLoad = convertMsToSec(Date.now() - timing.navigationStart);
   //const fcp = convertMsToSec(performance.getEntriesByName("first-contentful-paint",
   //    "paint")[0].startTime);
-  const fcpEntry = convertMsToSec(performance.getEntriesByName("first-contentful-paint","paint"));
+  const fcpEntry = performance.getEntriesByName("first-contentful-paint","paint");
   let fcp = 0;
   if(fcpEntry && fcpEntry.length>0) {
-    fcp = fcpEntry[0].startTime;
+    fcp = convertMsToSec(fcpEntry[0].startTime);
   }
   console.log("OLD FCP HEERE: " + performance.getEntriesByName("first-contentful-paint","paint"));
   console.log("OLD FCP getEntries by type: " + performance.getEntriesByType("paint"));
