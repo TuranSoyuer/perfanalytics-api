@@ -40,25 +40,13 @@ const sendPerformanceMetrics = (metrics) => {
     navigator.sendBeacon('https://performanceanalytics-api.herokuapp.com/api/analytics', blob);
 }
 
-window.addEventListener('load', () => {
-  if (!isPerformanceSupported()) {
-    console.log("perfanalytics.js: window.performance is not supported!");
-    return;
-  }
-
-  let perfMetrics = getPerformanceMetrics(window.performance);
-  perfMetrics["siteUrl"] = window.location.href;
-  console.log(perfMetrics);
-  sendPerformanceMetrics(perfMetrics);
-});
-
 const startObserver = () => {
+  console.log('start observer');
   if(typeof(PerformanceObserver) === 'undefined') return;
-
-  
 
   const observerEntryHandlers = {
     paint(entry) {
+      console.log("enrty:" + entry);
       if(entry.name !== 'first-contentful-paint') return;
 
       console.log("first-contentful-paint start time(FCP):" + entry.startTime);
@@ -74,3 +62,15 @@ const startObserver = () => {
 }
 
 startObserver();
+
+window.addEventListener('load', () => {
+  if (!isPerformanceSupported()) {
+    console.log("perfanalytics.js: window.performance is not supported!");
+    return;
+  }
+
+  let perfMetrics = getPerformanceMetrics(window.performance);
+  perfMetrics["siteUrl"] = window.location.href;
+  console.log("All metrics:" + perfMetrics);
+  sendPerformanceMetrics(perfMetrics);
+});
