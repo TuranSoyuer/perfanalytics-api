@@ -53,12 +53,16 @@ const startObserver = () => {
     }
   }
   
+  console.log("pass1");
   const observer = new PerformanceObserver((list) => {
+    console.log("pass2" + list);
     for (const entry of list.getEntries()) {
       console.log("observer entry:" + entry);
       observerEntryHandlers[entry.entryType](entry);
     }
   })
+
+  console.log("pass3");
   observer.observe({ entryTypes: ['paint'] });
 }
 
