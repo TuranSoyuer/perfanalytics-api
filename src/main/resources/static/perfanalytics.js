@@ -71,7 +71,7 @@ const startObserver = () => {
       console.log("observer entry:" + entry);
     }
   });
-  observer.observe({entryTypes: ["paint", "mark", "frame"]});
+  observer.observe({entryTypes: ["paint", "mark"]});
 
   console.log("pass3");
   //observer.observe({ entryTypes: ['paint'] });
