@@ -35,7 +35,7 @@ public class AnalyticsService {
             filterInput.setEndDate(new Date(System.currentTimeMillis()));
         }
 
-        return analyticsRepository.findAll(filterInput.getStartDate());
+        return analyticsRepository.findAll(filterInput.getStartDate(), filterInput.getEndDate());
 
     }
 
