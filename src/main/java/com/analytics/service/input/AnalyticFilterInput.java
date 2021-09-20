@@ -1,4 +1,4 @@
-package com.analytics.controller.input;
+package com.analytics.service.input;
 
 import lombok.Data;
 

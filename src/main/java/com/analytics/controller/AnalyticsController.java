@@ -1,6 +1,5 @@
 package com.analytics.controller;
 
-import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,7 +34,10 @@ public class AnalyticsController {
     }
 
     @GetMapping("/analytics")
-    public ResponseEntity<List<AnalyticItem>> getAnalytic(AnalyticFilterInput input) {
-        return ResponseEntity.ok(analyticsService.getAnalytics(input));
+    public ResponseEntity<List<AnalyticItem>> getAnalytic(
+            @RequestParam(value = "startDate", required = false) Long startDate,
+            @RequestParam(value = "endDate", required = false) Long endDate) {
+
+        return ResponseEntity.ok(analyticsService.getAnalytics(startDate, endDate));
     }
 }

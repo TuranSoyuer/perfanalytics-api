@@ -1,10 +1,10 @@
 package com.analytics.controller;
 
-import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.controller.input.ResourceInput;
 import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
+import com.analytics.service.input.AnalyticFilterInput;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,11 +61,11 @@ class AnalyticsControllerTest {
         AnalyticItem analyticItem = new AnalyticItem("sample.com", 0.1, 0.15, 0.2,
                 0.35, resourceInputList, new Date(System.currentTimeMillis() - 1800 * 1000));
         analyticItemList.add(analyticItem);
-        when(mockAnalyticsService.getAnalytics(any(AnalyticFilterInput.class)))
+        when(mockAnalyticsService.getAnalytics(any(Long.class), any(Long.class)))
                 .thenReturn(analyticItemList);
 
         AnalyticFilterInput analyticFilterInput = new AnalyticFilterInput();
-        final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest.getAnalytic(analyticFilterInput);
+        final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest.getAnalytic(null, null);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(1, responseEntity.getBody().size());
         AnalyticItem item = responseEntity.getBody().get(0);
