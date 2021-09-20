@@ -4,8 +4,6 @@ import com.analytics.controller.input.AnalyticFilterInput;
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.repository.AnalyticItem;
 import com.analytics.repository.AnalyticsRepository;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.Filters;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,12 @@ public class AnalyticsService {
         this.analyticsRepository = analyticsRepository;
     }
 
-    public void createAnalytic(AnalyticInput input) {
+    public AnalyticItem createAnalytic(AnalyticInput input) {
         AnalyticItem analyticItem = new AnalyticItem(input.getSiteUrl(), input.getTtfb(), input.getFcp(),
                 input.getDomLoad(), input.getWindowLoad(), input.getResourceMetrics(), new Date());
 
 //        log.info("Analytic item:" + analyticItem.toString());
-        this.analyticsRepository.save(analyticItem);
+        return analyticsRepository.save(analyticItem);
     }
 
     public List<AnalyticItem> getAnalytics(AnalyticFilterInput filterInput) {
