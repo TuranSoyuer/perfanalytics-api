@@ -25,12 +25,17 @@ public class AnalyticsService {
     public AnalyticItem createAnalytic(AnalyticInput input) {
         AnalyticItem analyticItem = new AnalyticItem(input.getSiteUrl(), input.getTtfb(), input.getFcp(),
                 input.getDomLoad(), input.getWindowLoad(), input.getResourceMetrics(), new Date());
-
-//        log.info("Analytic item:" + analyticItem.toString());
+;
         return analyticsRepository.save(analyticItem);
     }
 
     public List<AnalyticItem> getAnalytics(AnalyticFilterInput filterInput) {
+        if (filterInput == null ) {
+            filterInput = new AnalyticFilterInput();
+            filterInput.setStartDate(new Date(System.currentTimeMillis() - 1800 * 1000));
+            filterInput.setEndDate(new Date(System.currentTimeMillis()));
+        }
+
         return analyticsRepository.findAll(filterInput.getStartDate());
 
     }

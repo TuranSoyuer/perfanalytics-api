@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 @Log
@@ -35,12 +34,7 @@ public class AnalyticsController {
     }
 
     @GetMapping("/analytics")
-    public ResponseEntity<List<AnalyticItem>> getAnalytic() {
-//        log.info("filter: " + filterInput.toString());
-
-        Date date = new Date(System.currentTimeMillis() - 1800 * 1000);
-        AnalyticFilterInput input = new AnalyticFilterInput();
-        input.setStartDate(date);
+    public ResponseEntity<List<AnalyticItem>> getAnalytic(AnalyticFilterInput input) {
         return ResponseEntity.ok(analyticsService.getAnalytics(input));
     }
 }

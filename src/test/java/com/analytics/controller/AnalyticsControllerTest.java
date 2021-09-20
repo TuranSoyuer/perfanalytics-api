@@ -64,7 +64,8 @@ class AnalyticsControllerTest {
         when(mockAnalyticsService.getAnalytics(any(AnalyticFilterInput.class)))
                 .thenReturn(analyticItemList);
 
-        final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest.getAnalytic();
+        AnalyticFilterInput analyticFilterInput = new AnalyticFilterInput();
+        final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest.getAnalytic(analyticFilterInput);
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(1, responseEntity.getBody().size());
         AnalyticItem item = responseEntity.getBody().get(0);
