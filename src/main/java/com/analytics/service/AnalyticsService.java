@@ -30,8 +30,7 @@ public class AnalyticsService {
     }
 
     public List<AnalyticItem> getAnalytics(AnalyticFilterInput filterInput) {
-        if (filterInput == null ) {
-            filterInput = new AnalyticFilterInput();
+        if (filterInput.getStartDate() == null || filterInput.getEndDate() == null) {
             filterInput.setStartDate(new Date(System.currentTimeMillis() - 1800 * 1000));
             filterInput.setEndDate(new Date(System.currentTimeMillis()));
         }
