@@ -69,7 +69,7 @@ class AnalyticsControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertEquals(1, responseEntity.getBody().size());
         AnalyticItem item = responseEntity.getBody().get(0);
-        Assert.assertEquals("sample.com.tr", item.getSiteUrl());
+        Assert.assertEquals("sample.com", item.getSiteUrl());
 
     }
 }
