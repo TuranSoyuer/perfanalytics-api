@@ -41,7 +41,7 @@ public class AnalyticsService {
         }
 
         return analyticsRepository.findAll(filterInput.getStartDate(), filterInput.getEndDate(),
-                Sort.by(Sort.Direction.DESC, "createDate"));
+                Sort.by(Sort.Direction.ASC, "createDate"));
 
     }
 
