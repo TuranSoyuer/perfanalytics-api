@@ -6,6 +6,7 @@ import com.analytics.repository.AnalyticsRepository;
 import com.analytics.service.input.AnalyticFilterInput;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -39,7 +40,8 @@ public class AnalyticsService {
             filterInput.setEndDate(new Date(endDate));
         }
 
-        return analyticsRepository.findAll(filterInput.getStartDate(), filterInput.getEndDate());
+        return analyticsRepository.findAll(filterInput.getStartDate(), filterInput.getEndDate(),
+                Sort.by(Sort.Direction.DESC, "createDate"));
 
     }
 
