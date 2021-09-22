@@ -1,10 +1,15 @@
 package com.analytics.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.analytics.controller.input.AnalyticInput;
 import com.analytics.controller.input.ResourceInput;
 import com.analytics.repository.AnalyticItem;
 import com.analytics.service.AnalyticsService;
-import com.analytics.service.input.AnalyticFilterInput;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,61 +20,69 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class AnalyticsControllerTest {
 
-    @InjectMocks
-    private AnalyticsController analyticsControllerUnderTest;
+  private AnalyticInput analyticInput;
+  private List<AnalyticItem> analyticItemList;
+  private AnalyticItem analyticItem;
 
-    @Mock
-    private AnalyticsService mockAnalyticsService;
+  @InjectMocks
+  private AnalyticsController analyticsControllerUnderTest;
 
-    @BeforeEach
-    void setUp() {
+  @Mock
+  private AnalyticsService mockAnalyticsService;
 
-    }
+  @BeforeEach
+  void setUp() {
+    analyticInput = new AnalyticInput();
+    analyticInput.setSiteUrl("sample.com");
+    analyticInput.setTtfb(0.1);
+    analyticInput.setFcp(0.15);
+    analyticInput.setDomLoad(0.2);
+    analyticInput.setWindowLoad(0.35);
 
-    @Test
-    void createAnalytic() {
-        AnalyticInput input = new AnalyticInput();
-        input.setSiteUrl("sample.com");
+    List<ResourceInput> resourceInputList = new ArrayList<>();
+    analyticItem = new AnalyticItem("sample.com", 0.1, 0.15, 0.2,
+        0.35, resourceInputList, new Date(1632331568976L));
 
-        List<ResourceInput> resourceInputList = new ArrayList<>();
-        AnalyticItem analyticItem = new AnalyticItem("sample.com", 0.1, 0.15, 0.2,
-                0.35, resourceInputList, new Date(System.currentTimeMillis() - 1800 * 1000));
-        when(mockAnalyticsService.createAnalytic(input))
-                .thenReturn(analyticItem);
+    analyticItemList = new ArrayList<>();
+    analyticItemList.add(analyticItem);
+  }
 
-        final ResponseEntity<AnalyticItem> responseEntity = analyticsControllerUnderTest.createAnalytic(input);
+  @Test
+  void createAnalytic() {
+    when(mockAnalyticsService.createAnalytic(analyticInput))
+        .thenReturn(analyticItem);
 
-        AnalyticItem responseItem = responseEntity.getBody();
-        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals("sample.com", responseItem.getSiteUrl());
-    }
+    final ResponseEntity<AnalyticItem> responseEntity = analyticsControllerUnderTest
+        .createAnalytic(analyticInput);
 
-    @Test
-    void getAnalytic() {
-        List<AnalyticItem> analyticItemList = new ArrayList<>();
-        List<ResourceInput> resourceInputList = new ArrayList<>();
-        AnalyticItem analyticItem = new AnalyticItem("sample.com", 0.1, 0.15, 0.2,
-                0.35, resourceInputList, new Date(System.currentTimeMillis() - 1800 * 1000));
-        analyticItemList.add(analyticItem);
-        when(mockAnalyticsService.getAnalytics(any(Long.class), any(Long.class)))
-                .thenReturn(analyticItemList);
+    AnalyticItem responseItem = responseEntity.getBody();
+    Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+    Assert.assertEquals("sample.com", responseItem.getSiteUrl());
+    Assert.assertEquals(0.1, responseItem.getTtfb(), 0);
+    Assert.assertEquals(0.15, responseItem.getFcp(), 0);
+    Assert.assertEquals(0.2, responseItem.getDomLoad(), 0);
+    Assert.assertEquals(0.35, responseItem.getWindowLoad(), 0);
+  }
 
-        AnalyticFilterInput analyticFilterInput = new AnalyticFilterInput();
-        final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest.getAnalytic(null, null);
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(1, responseEntity.getBody().size());
-        AnalyticItem item = responseEntity.getBody().get(0);
-        Assert.assertEquals("sample.com", item.getSiteUrl());
+  @Test
+  void getAnalytic() {
 
-    }
+    when(mockAnalyticsService.getAnalytics(any(Long.class), any(Long.class)))
+        .thenReturn(analyticItemList);
+
+    final ResponseEntity<List<AnalyticItem>> responseEntity = analyticsControllerUnderTest
+        .getAnalytic(1632331568976L, 1632331633403L);
+
+    Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    Assert.assertEquals(1, responseEntity.getBody().size());
+    AnalyticItem response = responseEntity.getBody().get(0);
+    Assert.assertEquals("sample.com", response.getSiteUrl());
+    Assert.assertEquals(0.1, response.getTtfb(), 0);
+    Assert.assertEquals(0.15, response.getFcp(), 0);
+    Assert.assertEquals(0.2, response.getDomLoad(), 0);
+    Assert.assertEquals(0.35, response.getWindowLoad(), 0);
+  }
 }
