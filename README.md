@@ -9,7 +9,7 @@ Application written with Spring. Data stored in MongoDb.
     * startDate: time in ms 
     * endDate: time in ms
 * POST /api/analytics -> Saves metric data.
-    * Valid input object required. Class: AnalyticInput
+    * Input object: AnalyticInput
     
     
 ### JS Library
